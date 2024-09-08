@@ -1,0 +1,38 @@
+import math
+
+# Parámetros conocidos
+B = 20  # Ancho (m)
+H = 0.3  # Profundidad (m)
+n = 0.03  # Coeficiente de rugosidad central
+S = 0.0003  # Pendiente central
+
+# Variaciones de n y S
+delta_n = 0.033 - 0.03  # Variación de n
+delta_S = 0.00033 - 0.0003  # Variación de S
+
+# Fórmula de Manning para el flujo Q
+def manning_formula(B, H, n, S):
+    return (1 / n) * ((B * H) / (B + 2 * H))**(5/3) * math.sqrt(S)
+
+# Cálculo de derivadas parciales
+def partial_derivative_n(B, H, n, S):
+    return - (1 / n**2) * ((B * H) / (B + 2 * H))**(5/3) * math.sqrt(S)
+
+def partial_derivative_S(B, H, n, S):
+    return (1 / n) * ((B * H) / (B + 2 * H))**(5/3) * (1 / (2 * math.sqrt(S)))
+
+# Cálculo de las derivadas parciales en los puntos centrales
+dQ_dn = partial_derivative_n(B, H, n, S)
+dQ_dS = partial_derivative_S(B, H, n, S)
+
+# Cálculo del flujo Q con los valores centrales
+Q_central = manning_formula(B, H, n, S)
+
+# Cálculo de la variación de Q debido a la variación de n y S
+delta_Q = abs(dQ_dn) * delta_n + abs(dQ_dS) * delta_S
+
+# Resultados
+print(f"Flujo central Q = {Q_central:.5f} m^3/s")
+print(f"Derivada parcial respecto a n (dQ/dn) = {dQ_dn:.5f}")
+print(f"Derivada parcial respecto a S (dQ/dS) = {dQ_dS:.5f}")
+print(f"Variación de Q (ΔQ) = {delta_Q:.5f} m^3/s")
