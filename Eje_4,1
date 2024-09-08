@@ -1,0 +1,35 @@
+import math
+
+# Función para calcular el valor verdadero de e^(-x)
+def true_value(x):
+    return math.exp(-x)
+
+# Función para calcular la expansión de Taylor para e^(-x) utilizando el formato de la imagen
+def taylor_series_e_neg_x(x_i, h, order):
+    taylor_sum = math.exp(-x_i)  # Primer término
+    if order >= 1:
+        taylor_sum -= math.exp(-x_i) * h  # Segundo término
+    if order >= 2:
+        taylor_sum += math.exp(-x_i) * (h**2) / 2  # Tercer término
+    if order >= 3:
+        taylor_sum -= math.exp(-x_i) * (h**3) / 6  # Cuarto término
+    return taylor_sum
+
+# Valores iniciales
+x_i = 0.2
+x_final = 1  # xi+1
+h = x_final - x_i  # h = 0.8
+orders = [0, 1, 2, 3]  # grados de aproximación
+
+# Valor verdadero en x_final
+true_val = true_value(x_final)
+
+# Calcular aproximaciones y errores
+for order in orders:
+    approx_val = taylor_series_e_neg_x(x_i, h, order)
+    error_percent = abs((true_val - approx_val) / true_val) * 100
+    print(f"Orden {order}:")
+    print(f"  Aproximación: {approx_val}")
+    print(f"  Valor verdadero: {true_val}")
+    print(f"  Error porcentual: {error_percent:.2f}%")
+    print()
