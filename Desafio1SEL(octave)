@@ -1,0 +1,15 @@
+en octave
+% Definir la matriz A
+A = [0.52, 0.3, 0.18; 0.2, 0.5, 0.3; 0.25, 0.2, 0.55];
+% Definir el vector columna B
+B = [4800; 5810; 5690];
+% Resolver el sistema utilizando el operador \
+X = A \ B;
+% Calcular la inversa de la matriz A
+A_inv = inv(A);
+% Mostrar el resultado
+disp('El vector solución X es:');
+disp(X);
+% Mostrar la matriz inversa de A
+disp('La matriz inversa de A es:');
+disp(A_inv);
